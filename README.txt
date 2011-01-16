@@ -1,5 +1,7 @@
 JAM - Jquery Admin Mobile Theme
 
+Author: Eric J. Duran
+
 This is a mobile theme for Drupal 7.x build on Jquery Mobile.
 
 The reason why I decided to make this a admin theme is because of Drupal flexibility it would be impossible to know what your page is build on.

@@ -12,7 +12,7 @@ This theme currently does not work with the following modules enable: contextual
 This theme is not consider production ready. 
 
 Screenshots:
-Screenshot 1(https://github.com/ericduran/jam/raw/master/screenshot.png)
-Screenshot 2(https://github.com/ericduran/jam/raw/master/screenshot_2.png)
-Screenshot 3(https://github.com/ericduran/jam/raw/master/screenshot_3.png)
-Screenshot 4(https://github.com/ericduran/jam/raw/master/screenshot_4.png)
+[Screenshot 1](https://github.com/ericduran/jam/raw/master/screenshot.png)
+[Screenshot 2](https://github.com/ericduran/jam/raw/master/screenshot_2.png)
+[Screenshot 3](https://github.com/ericduran/jam/raw/master/screenshot_3.png)
+[Screenshot 4](https://github.com/ericduran/jam/raw/master/screenshot_4.png)

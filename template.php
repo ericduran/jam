@@ -2,6 +2,17 @@
 // $Id$
 
 /**
+ * Little debuging, it's hard to debug jquery mobile
+ * this little wrapper just takes any php objects turns it to json and logs it to the screen.
+ * works like a charm :)
+ */
+function print_to_screen($var) {
+  $json = drupal_json_encode($var);
+  print "<script>console.log(".$json.")</script>";
+}
+
+
+/**
  * Empty out all the clases.
  */
 function jam_class_reset(&$element) {
@@ -292,15 +303,17 @@ function jam_form_element($variables) {
       break;
   }
 
-  if (!empty($element['#description'])) {
-    $output .= '<div class="description">' . $element['#description'] . "</div>\n";
-  }
-
   $output .= "</div>\n";
 
   return $output;
 }
 
+/**
+ * Overwriting theme_element_label
+ *
+ * Removed the appending of a asterisk for required elements.
+ * We will not add any visual indicators to test the "required" element option.
+ */
 function jam_form_element_label($variables) {
   $element = $variables['element'];
   // This is also used in the installer, pre-database setup.
@@ -311,9 +324,6 @@ function jam_form_element_label($variables) {
     return '';
   }
 
-  // If the element is required, a required marker is appended to the label.
-  $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
-
   $title = filter_xss_admin($element['#title']);
 
   $attributes = array();
@@ -323,5 +333,42 @@ function jam_form_element_label($variables) {
   }
 
   // The leading whitespace helps visually separate fields from inline labels.
-  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title', array('!title' => $title)) . "</label>\n";
+}
+
+/**
+ * Overwritten the default textfield theme.
+ */
+function jam_textfield($variables) {
+  $element = $variables['element'];
+  $element['#attributes']['type'] = 'text';
+  element_set_attributes($element, array('id', 'name', 'value', 'size', 'maxlength'));
+  _form_set_class($element, array('form-text'));
+
+  $extra = '';
+  if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
+    drupal_add_library('system', 'drupal.autocomplete');
+    $element['#attributes']['class'][] = 'form-autocomplete';
+
+    $attributes = array();
+    $attributes['type'] = 'hidden';
+    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+    $attributes['disabled'] = 'disabled';
+    $attributes['class'][] = 'autocomplete';
+    $extra = '<input' . drupal_attributes($attributes) . ' />';
+  }
+  if (isset($element['#description'])) {
+    // Lets move it to placeholder, is not correct but the space is limited on a mobile device.
+    $element['#attributes']['placeholder'] = $element['#description'];
+  }
+  
+  if (isset($element['#required']) && $element['#required'] == TRUE) {
+    // Lets add the required attribute to the element.
+    $element['#attributes']['required'] = "required";
+  }
+
+  $output = '<input' . drupal_attributes($element['#attributes']) . ' />';
+
+  return $output . $extra;
 }

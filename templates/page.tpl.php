@@ -1,5 +1,5 @@
 <?php
-// $Id: page.tpl.php,v 1.47 2010/11/05 01:25:33 dries Exp $
+// $Id$
 
 /**
  * @file
@@ -69,22 +69,26 @@
 ?>
 <div data-role="page" data-theme="b" id="jqm-home"> 
   <div data-role="header"> 
-  	<h1><?php if ($title) print $title ?></h1> 
+    <h1><?php if ($title) print $title ?></h1>
+    <!--
+    we'll use the new form attribute to specify which form this save button is for
+    // with out having to wrap it in the form
   	<a href="index.html" data-icon="check" class="ui-btn-right" data-theme="b">Save</a>
+  	 -->
   	<div data-role="navbar">
       <?php print render($tabs); ?>
     </div><!-- /navbar -->
-  </div>
+  </div><!-- /header -->
   <div data-role="content">
     <?php if ($messages): ?>
-      <div id="messages"><div class="section clearfix">
+      <div id="messages">
         <?php print $messages; ?>
-      </div></div> <!-- /.section, /#messages -->
+      </div> <!-- /#messages -->
     <?php endif; ?>
     <?php print render($page['help']); ?>
     <?php if ($action_links): ?><ul><?php print render($action_links); ?></ul><?php endif; ?>
     <?php print render($page['content']); ?>
-  </div> <!-- /#content -->
+  </div> <!-- /content -->
   
   <?php if ($feed_icons): ?>
     <div data-role="footer">
